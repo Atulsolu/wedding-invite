@@ -1772,11 +1772,145 @@
   background: #fff7e6;
   color: #b71c1c;
 }
-            html,
+html,
 body {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
+  }
+
+.invite-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(244,184,193,0.45), transparent 34%),
+    radial-gradient(circle at 80% 75%, rgba(217,207,232,0.55), transparent 36%),
+    linear-gradient(160deg, #fff8ef 0%, #fce8ef 46%, #f2edf8 100%);
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+.invite-gate.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.envelope-open-btn {
+  width: min(86vw, 430px);
+  border: 0;
+  background: transparent;
+  color: var(--text-dark);
+  cursor: pointer;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.envelope-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.42;
+  filter: drop-shadow(0 26px 46px rgba(123,87,64,0.22));
+  transform-style: preserve-3d;
+}
+
+.envelope-back,
+.envelope-front,
+.envelope-flap {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+}
+
+.envelope-back {
+  background: linear-gradient(145deg, #fff7e8, #f4d7ba);
+  border: 1px solid rgba(201,146,42,0.28);
+}
+
+.envelope-front {
+  overflow: hidden;
+}
+
+.envelope-front::before,
+.envelope-front::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.envelope-front::before {
+  clip-path: polygon(0 100%, 50% 45%, 100% 100%);
+  background: linear-gradient(180deg, #ffe8c5, #f2c996);
+}
+
+.envelope-front::after {
+  clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
+  background:
+    linear-gradient(35deg, transparent 0 48%, rgba(201,146,42,0.32) 49% 51%, transparent 52%),
+    linear-gradient(-35deg, transparent 0 48%, rgba(201,146,42,0.28) 49% 51%, transparent 52%),
+    linear-gradient(180deg, rgba(255,255,255,0.34), rgba(244,184,193,0.24));
+}
+
+.envelope-flap {
+  transform-origin: top center;
+  clip-path: polygon(0 0, 50% 58%, 100% 0);
+  background: linear-gradient(180deg, #fff2d8, #eec391);
+  border-top: 1px solid rgba(201,146,42,0.28);
+  transition: transform 0.85s ease;
+  z-index: 2;
+}
+
+.envelope-seal {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  z-index: 3;
+  width: 62px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #d54b5a, #a82134);
+  color: #fff9ef;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.45rem;
+  box-shadow: 0 10px 24px rgba(168,33,52,0.28);
+  transform: translate(-50%, -50%);
+  transition: transform 0.65s ease, opacity 0.45s ease;
+}
+
+.envelope-open-btn:hover .envelope-flap {
+  transform: rotateX(18deg);
+}
+
+.invite-gate.opening .envelope-flap {
+  transform: rotateX(170deg);
+}
+
+.invite-gate.opening .envelope-seal {
+  transform: translate(-50%, -50%) scale(0.72);
+  opacity: 0;
+}
+
+.envelope-title {
+  margin-top: 1.5rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.85rem, 7vw, 3rem);
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.envelope-subtitle {
+  margin-top: 0.45rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
 }
 
 img,
@@ -1810,6 +1944,18 @@ video {
         </style>
     </head>
     <body>
+        <div class="invite-gate" id="invite-gate">
+            <button class="envelope-open-btn" id="open-invite" type="button" aria-label="निमंत्रण खोलें">
+                <div class="envelope-card" aria-hidden="true">
+                    <div class="envelope-back"></div>
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-front"></div>
+                    <div class="envelope-seal">ॐ</div>
+                </div>
+                <div class="envelope-title">Atul ❤️ Abhilasha</div>
+                <div class="envelope-subtitle">With Love & Gratitude</div>
+            </button>
+        </div>
         <!-- ══════════════════════════════════ HERO ══════════════════════════════════ -->
         <section id="hero">
             <div class="hero-bg">
@@ -2226,7 +2372,7 @@ video {
                         <p class="event-detail">
                             <strong>21 June, 2026</strong>
                             A sacred beginning marked by blessings, tradition, and devotion as we celebrate the
-                            Upanayana Janeu Sanskar of <strong>Shubham</strong><strong>Ashish</strong> and
+                            Upanayana Janeu Sanskar of <strong>Shubham,Ashish</strong> and
                             <strong>Adarsh</strong> with family, love, and joyful prayers.
                         </p>
                         <div class="event-time-pill">
@@ -2265,7 +2411,19 @@ video {
                             </svg>
                             4:00 PM
                         </div>
-                        <p class="event-detail" style="margin-top:0.6rem;font-size:0.76rem;">Benaut,Chhapra, Bihar</p>
+                        <p class="event-detail" style="margin-top:0.6rem;font-size:0.76rem;">Benaut,Chhapra, Bihar
+                    
+                        </p>
+                         <p class="event-detail" style="margin-top:0.35rem;font-size:0.76rem;">
+                            <strong>along with Utsav Birthday</strong>
+                        </p>
+                        <div class="event-time-pill">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                <circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/>
+                                <path d="M6 3v3l2 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                            </svg>
+                            9:00 PM
+                        </div>
                     </div>
 
                     <!-- Haldi & Mehandi -->
@@ -2628,6 +2786,8 @@ video {
                     <p class="warm-regards-name">Manoj Singh</p>
                     <p class="warm-regards-name">Rajesh Singh</p>
                     <p class="warm-regards-name">Devendra Prasad Singh</p>
+                    <p class="warm-regards-name">Ankit Kumar Singh</p>
+                    <p class="warm-regards-name">Yash Pratap Singh</p>
                 </div>
                 <div class="section-divider"></div>
             </div>
@@ -2847,5 +3007,42 @@ video {
                 setInterval(updateCountdown, 1000);
 
         </script>
+        <!-- ✅ loop removed from here -->
+<audio id="bg-music" preload="auto">
+    <source src="Vakratunda Mahakaya.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    const bgMusic = document.getElementById('bg-music');
+    const inviteGate = document.getElementById('invite-gate');
+    const openInviteBtn = document.getElementById('open-invite');
+
+    const secondSong = "Aaj Sajeya.mp3";
+
+    let secondSongLoaded = false;
+
+    bgMusic.addEventListener('ended', () => {
+        if (!secondSongLoaded) {
+            secondSongLoaded = true;
+            bgMusic.src = secondSong;
+            bgMusic.loop = true;
+            bgMusic.play().catch(() => {});
+        }
+    });
+
+    openInviteBtn.addEventListener('click', () => {
+        inviteGate.classList.add('opening');
+        bgMusic.play().catch(() => {});
+
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen().catch(() => {});
+        }
+
+        setTimeout(() => {
+            inviteGate.classList.add('hidden');
+            document.getElementById('hero').scrollIntoView({ behavior: 'smooth' });
+        }, 700);
+    });
+</script>
     </body>
 </html>
