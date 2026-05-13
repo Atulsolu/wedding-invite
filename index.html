@@ -2782,10 +2782,15 @@ video {
             <div class="section-inner">
                 <p class="section-label"><strong>With Warm Regards</strong></p>
                 <div class="warm-regards-names">
+                    <p class="warm-regards-name">Vinod Singh</p>
                     <p class="warm-regards-name">Mrigendra Singh</p>
                     <p class="warm-regards-name">Manoj Singh</p>
                     <p class="warm-regards-name">Rajesh Singh</p>
                     <p class="warm-regards-name">Devendra Prasad Singh</p>
+                    <p class="warm-regards-name">Raghwendra Prasad Singh</p>
+                    <p class="warm-regards-name">Rohit Ranjan</p>
+                    <p class="warm-regards-name">Rajiv Ranjan</p
+                    <p class="warm-regards-name">Shivam</p>
                     <p class="warm-regards-name">Ankit Kumar Singh</p>
                     <p class="warm-regards-name">Yash Pratap Singh</p>
                 </div>
@@ -3027,6 +3032,9 @@ video {
             bgMusic.src = secondSong;
             bgMusic.loop = true;
             bgMusic.play().catch(() => {});
+            setTimeout(() => {
+            bgMusic.pause();
+        }, 60000);
         }
     });
 
